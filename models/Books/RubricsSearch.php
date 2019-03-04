@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use app\models\Books\Rubrics;
 
 /**
- * RubricsSearch represents the model behind the search form of `app\models\Rubrics`.
+ * RubricsSearch represents the model behind the search form of `app\models\Books\Rubrics`.
  */
 class RubricsSearch extends Rubrics
 {
@@ -17,8 +17,8 @@ class RubricsSearch extends Rubrics
     public function rules()
     {
         return [
-            [['id', 'parent_id'], 'integer'],
-            [['name', 'created_at'], 'safe'],
+            [['id', 'lft', 'rgt', 'depth'], 'integer'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -59,8 +59,9 @@ class RubricsSearch extends Rubrics
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'parent_id' => $this->parent_id,
-            'created_at' => $this->created_at,
+            'lft' => $this->lft,
+            'rgt' => $this->rgt,
+            'depth' => $this->depth,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

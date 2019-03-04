@@ -8,6 +8,7 @@ use app\models\Books\BooksSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\forms\BooksForm;
 
 /**
  * BooksController implements the CRUD actions for Books model.
@@ -64,10 +65,12 @@ class BooksController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Books();
+        $model = new BooksForm();
+        $model->books = new Books();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model->setAttributes(Yii::$app->request->post());
+        if (Yii::$app->request->post() && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->books->id]);
         }
 
         return $this->render('create', [
@@ -84,10 +87,11 @@ class BooksController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = new BooksForm();
+        $model->books = $this->findModel($id);
+        $model->setAttributes(Yii::$app->request->post());
+        if (Yii::$app->request->post() && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->books->id]);
         }
 
         return $this->render('update', [

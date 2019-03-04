@@ -11,7 +11,7 @@ use Yii;
  * @property string $name
  * @property string $created_at
  *
- * @property BookAuthor[] $bookAuthors
+ * @property BookAuthor[] $bookAuthor
  */
 class Authors extends \yii\db\ActiveRecord
 {
@@ -45,6 +45,11 @@ class Authors extends \yii\db\ActiveRecord
             'name' => 'Name',
             'created_at' => 'Created At',
         ];
+    }
+
+    public function getBooks() {
+        return $this->hasMany(Books::className(), ['id' => 'book_id'])
+            ->viaTable('auth_assignment', ['author_id' => 'id']);
     }
 
     /**

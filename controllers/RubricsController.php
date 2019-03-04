@@ -66,10 +66,17 @@ class RubricsController extends Controller
     {
         $model = new Rubrics();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->sub == null){
+                $model->makeRoot();
+           } else {
+               $parent = Rubrics::find()->andWhere(['id'=>$model->sub])->one();
+                $model->prependTo($parent);
+           }
+            if ($model->save()){
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);

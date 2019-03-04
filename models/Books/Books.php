@@ -15,7 +15,7 @@ use app\models\PublishingHouse\PublishingHouse;
  * @property int $rubric_id
  * @property string $created_at
  *
- * @property BookAuthor[] $bookAuthors
+ * @property BookAuthor[] $bookAuthor
  * @property PublishingHouse $publisher
  * @property Rubrics $rubric
  * @property Photos[] $photos
@@ -57,15 +57,22 @@ class Books extends \yii\db\ActiveRecord
             'publisher_id' => 'Publisher ID',
             'rubric_id' => 'Rubric ID',
             'created_at' => 'Created At',
+            'Photos' => 'Photo'
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getBookAuthors()
+    public function getBookAuthor()
     {
         return $this->hasMany(BookAuthor::className(), ['book_id' => 'id']);
+    }
+
+    public function getAuthors()
+    {
+        return $this->hasMany(Authors::className(),['id' => 'author_id'])
+            ->viaTable('book_author',['book_id' => 'id']);
     }
 
     /**

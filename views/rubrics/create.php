@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Rubrics */
+/* @var $model app\models\Books\Rubrics */
 
 $this->title = 'Create Rubrics';
 $this->params['breadcrumbs'][] = ['label' => 'Rubrics', 'url' => ['index']];

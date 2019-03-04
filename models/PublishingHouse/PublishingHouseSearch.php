@@ -18,7 +18,7 @@ class PublishingHouseSearch extends PublishingHouse
     {
         return [
             [['id'], 'integer'],
-            [['publisher_names', 'created_at'], 'safe'],
+            [['publisher_names', 'created_at','phones'], 'safe'],
         ];
     }
 
@@ -64,7 +64,8 @@ class PublishingHouseSearch extends PublishingHouse
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'publisher_names', $this->publisher_names]);
+        $query->andFilterWhere(['like', 'publisher_names', $this->publisher_names])
+            ->andFilterWhere(['like', 'phones', $this->phones]);
 
         return $dataProvider;
     }

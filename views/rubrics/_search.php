@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\RubricsSearch */
+/* @var $model app\models\Books\RubricsSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -20,11 +20,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id') ?>
 
+    <?= $form->field($model, 'lft') ?>
+
+    <?= $form->field($model, 'rgt') ?>
+
+    <?= $form->field($model, 'depth') ?>
+
     <?= $form->field($model, 'name') ?>
-
-    <?= $form->field($model, 'parent_id') ?>
-
-    <?= $form->field($model, 'created_at') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

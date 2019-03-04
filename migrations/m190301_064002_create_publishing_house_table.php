@@ -15,6 +15,7 @@ class m190301_064002_create_publishing_house_table extends Migration
         $this->createTable('{{%publishing_house}}', [
             'id' => $this->primaryKey(),
             'publisher_names' => $this->string()->notNull(),
+            'phones' => $this->string(),
             'address_id' => $this->integer()->notNull(),
             'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')
         ]);

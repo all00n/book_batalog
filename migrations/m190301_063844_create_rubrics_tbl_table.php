@@ -14,9 +14,10 @@ class m190301_063844_create_rubrics_tbl_table extends Migration
     {
         $this->createTable('{{%rubrics_tbl}}', [
             'id' => $this->primaryKey(),
+            'lft' => $this->integer()->notNull(),
+            'rgt' => $this->integer()->notNull(),
+            'depth' => $this->integer()->notNull(),
             'name' => $this->string()->notNull(),
-            'parent_id' => $this->integer(),
-            'created_at' => $this->dateTime()->defaultExpression('CURRENT_TIMESTAMP')
         ]);
     }
 

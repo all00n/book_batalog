@@ -4,11 +4,12 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\BooksSearch */
+/* @var $searchModel app\models\Books\BooksSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Books';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="books-index">
 
@@ -29,8 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
             'id',
             'title',
             'date_of_publishing',
-            'publisher_id',
-            'rubric_id',
+            'publisher.publisher_names',
+            [
+                'attribute' => 'Authors',
+                'value' => function($model) {
+                    return implode(", ", array_map(function($ar){
+                        return $ar->name;
+                    }, $model->authors));
+                }
+            ],
+            'rubric.name',
             //'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],

@@ -16,7 +16,6 @@ use app\models\views\ShowAddress;
  *
  * @property Books[] $books
  * @property PublisherAddresses $address
- * @property PublishingPhones[] $publishingPhones
  * @property ShowAddress[] $show_address
  */
 class PublishingHouse extends \yii\db\ActiveRecord
@@ -38,9 +37,8 @@ class PublishingHouse extends \yii\db\ActiveRecord
             [['publisher_names', 'address_id'], 'required'],
             [['address_id'], 'integer'],
             [['created_at'], 'safe'],
-            [['publisher_names'], 'string', 'max' => 255],
+            [['publisher_names','phones'], 'string', 'max' => 255],
             [['address_id'], 'exist', 'skipOnError' => true, 'targetClass' => ShowAddress::className(), 'targetAttribute' => ['address_id' => 'id']],
-            [['publishing_phones'], 'exist', 'skipOnError' => true, 'targetClass' => PublishingPhones::className(), 'targetAttribute' => ['id' => 'publisher_id']],
         ];
     }
 
@@ -54,7 +52,7 @@ class PublishingHouse extends \yii\db\ActiveRecord
             'publisher_names' => 'Publisher Names',
             'showAddress' => 'Address',
             'created_at' => 'Created At',
-            'listerPhones' => 'Phones'
+            'phones' => 'Phones'
         ];
     }
 
@@ -73,22 +71,11 @@ class PublishingHouse extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ShowAddress::className(), ['id' => 'address_id']);
     }
-
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getPublishing_phones()
+    public function getPublisherAddresses()
     {
-        return $this->hasMany(PublishingPhones::className(), ['publisher_id' => 'id']);
-    }
-
-    public function getListerPhones()
-    {
-        $phones = [];
-        foreach($this->publishing_phones as $phone) {
-            $phones[] = $phone->phone;
-        }
-        return implode(',', $phones);
-
+        return $this->hasOne(PublisherAddresses::className(), ['id' => 'address_id']);
     }
 }

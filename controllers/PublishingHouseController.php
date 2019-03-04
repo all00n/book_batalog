@@ -66,12 +66,14 @@ class PublishingHouseController extends Controller
     public function actionCreate()
     {
         $model = new PublishingHouseForm();
-
         $model->publishingHouse = new PublishingHouse();
+        $model->setAttributes(Yii::$app->request->post());
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if (Yii::$app->request->post() && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Publishing house has been created.');
             return $this->redirect(['view', 'id' => $model->publishingHouse->id]);
         }
+
 
         return $this->render('create', [
             'model' => $model,
@@ -87,10 +89,13 @@ class PublishingHouseController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model = new PublishingHouseForm();
+        $model->publishingHouse = $this->findModel($id);
+        $model->setAttributes(Yii::$app->request->post());
+        if (Yii::$app->request->post() && $model->save()) {
+            Yii::$app->getSession()->setFlash('success', 'Publishing house has been updated.');
+            return $this->redirect(['view', 'id' => $model->publishingHouse->id]);
         }
 
         return $this->render('update', [

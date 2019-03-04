@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\RubricsSearch */
+/* @var $searchModel app\models\Books\RubricsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Rubrics';
@@ -27,9 +27,10 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\SerialColumn'],
 
             'id',
+            'lft',
+            'rgt',
+            'depth',
             'name',
-            'parent_id',
-            'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

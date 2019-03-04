@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute'=>'Address',
                 'value'=>'showAddress.address',
             ],
-            'listerPhones',
+            'phones',
             'created_at',
 
             ['class' => 'yii\grid\ActionColumn'],
