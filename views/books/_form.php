@@ -10,8 +10,9 @@ use app\models\Books\Authors;
 /* @var $this yii\web\View */
 /* @var $model app\models\forms\BooksForm */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $authors Authors */
+
 ?>
-<pre><?= print_r($model->errors) ?></pre>
 <div class="books-form">
 
     <?php $form = ActiveForm::begin(); ?>
@@ -20,13 +21,11 @@ use app\models\Books\Authors;
 
     <?= $form->field($model->books, 'date_of_publishing')->textInput() ?>
 
-    <?= $form->field($model->books, 'publisher_id')->textInput()->dropDownList(ArrayHelper::map(PublishingHouse::find()->all(),'id','publisher_names'))  ?>
+    <?= $form->field($model->books, 'publisher_id')->dropDownList(ArrayHelper::map(PublishingHouse::find()->all(),'id','publisher_names'))  ?>
 
     <?= $form->field($model->books, 'rubric_id')->dropDownList(ArrayHelper::map(Rubrics::find()->all(),'id','name')) ?>
 
-    <?= $form->field($model->bookAuthor, 'author_id')->dropDownList(ArrayHelper::map(Authors::find()->all(),'id','name')) ?>
-
-    <?= $form->field($model->photos, 'url')->fileInput() ?>
+    <?= $form->field($model->books, 'index')->checkboxList(ArrayHelper::map(Authors::find()->all(),'id','name')) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

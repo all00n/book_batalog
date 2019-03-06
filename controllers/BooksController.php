@@ -2,13 +2,18 @@
 
 namespace app\controllers;
 
+use app\models\Books\Authors;
+use app\models\Books\Photos;
+use app\models\ImageUpload;
 use Yii;
 use app\models\Books\Books;
 use app\models\Books\BooksSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\forms\BooksForm;
+use yii\web\UploadedFile;
 
 /**
  * BooksController implements the CRUD actions for Books model.
@@ -89,6 +94,8 @@ class BooksController extends Controller
     {
         $model = new BooksForm();
         $model->books = $this->findModel($id);
+        $model->books->index = ArrayHelper::getColumn($model->books->bookAuthor, 'author_id');
+
         $model->setAttributes(Yii::$app->request->post());
         if (Yii::$app->request->post() && $model->save()) {
             return $this->redirect(['view', 'id' => $model->books->id]);
@@ -127,5 +134,37 @@ class BooksController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionSetImage($id){
+
+        $model = new ImageUpload;
+
+        if(Yii::$app->request->isPost)
+        {
+            $file = UploadedFile::getInstance($model,'image');
+
+            $url = $model->uploadFile($file);
+
+            $photo = new Photos();
+            $photo->url = $url;
+            $photo->book_id = $id;
+            if($photo->save()){
+                return $this->redirect(['view','id'=>$id]);
+            }
+
+        }
+
+        return $this->render('image', ['model'=>$model]);
+    }
+    public function actionDeleteImage($id){
+        $image = Photos::findOne($id);
+        if($image) {
+            $model = new ImageUpload;
+            $model->dropFile($image->url);
+            $image->delete();
+            return $this->redirect(['view','id'=>$image->book_id]);
+        }
+        return $this->redirect(['index']);
     }
 }

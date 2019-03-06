@@ -22,6 +22,7 @@ use app\models\PublishingHouse\PublishingHouse;
  */
 class Books extends \yii\db\ActiveRecord
 {
+    public $index;
     /**
      * {@inheritdoc}
      */
@@ -37,7 +38,7 @@ class Books extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'date_of_publishing', 'publisher_id', 'rubric_id'], 'required'],
-            [['date_of_publishing', 'created_at'], 'safe'],
+            [['date_of_publishing', 'created_at','index'], 'safe'],
             [['publisher_id', 'rubric_id'], 'integer'],
             [['title'], 'string', 'max' => 255],
             [['publisher_id'], 'exist', 'skipOnError' => true, 'targetClass' => PublishingHouse::className(), 'targetAttribute' => ['publisher_id' => 'id']],

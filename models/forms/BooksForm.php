@@ -68,24 +68,21 @@ class BooksForm extends Model
 
             $this->books->save();
 
-            $this->bookAuthor->book_id = $this->books->id;
+            BookAuthor::deleteAll(['book_id' => $this->books->id]);
 
-            $this->bookAuthor->save(false);
-
-            if($this->photos->url = UploadedFile::getInstance($this->photos, 'url')) {
-
-                $this->photos->book_id = $this->books->id;
-
-                $this->photos->url = $this->upload($this->books->id);
-
-                //$this->imageFile = null;
-                $this->photos->save(false);
+            foreach ($this->books->index as $author){
+                $this->bookAuthor = new BookAuthor();
+                $this->bookAuthor->book_id = $this->books->id;
+                $this->bookAuthor->author_id = $author;
+                $this->bookAuthor->save();
             }
 
             $transaction->commit();
             return true;
         }catch (\Exception $err) {
             $transaction->rollBack();
+            var_dump($err->getMessage());
+            die();
             return false;
         }
     }

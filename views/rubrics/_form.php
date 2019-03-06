@@ -9,7 +9,6 @@ use \app\models\Books\Rubrics;
 /* @var $model app\models\Books\Rubrics */
 /* @var $form yii\widgets\ActiveForm */
 ?>
-<pre><?php print_r($model->errors) ?></pre>
 <div class="rubrics-form">
 
     <?php $form = ActiveForm::begin(); ?>
